@@ -1,0 +1,155 @@
+﻿@model HomeIndexViewModel
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- Include Bootstrap CSS for styling -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container mt-5">
+    <h2 class="mb-4">Welcome to the Document Download Page</h2>
+
+    <p>Select an account, database, and collection to download documents.</p>
+
+    @using (Html.BeginForm("DownloadDocuments", "Home", FormMethod.Post, new { id = "downloadForm", @class = "needs-validation", novalidate = "novalidate" }))
+    {
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="accountSelect">Account Name:</label>
+                <select id="accountSelect" name="accountName" class="form-control custom-select" required>
+                    <option value="">Select an account</option>
+                    @foreach (var accountName in Model.AccountNames)
+                    {
+                        <option value="@accountName">@accountName</option>
+                    }
+                </select>
+                <div class="invalid-feedback">Please select an account.</div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="databaseSelect">Database Name:</label>
+                <select id="databaseSelect" name="databaseName" class="form-control custom-select" required disabled>
+                    <option value="">Select a database</option>
+                </select>
+                <div class="invalid-feedback">Please select a database.</div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="collectionSelect">Collection Name:</label>
+                <select id="collectionSelect" name="collectionName" class="form-control custom-select" required disabled>
+                    <option value="">Select a collection</option>
+                </select>
+                <div class="invalid-feedback">Please select a collection.</div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" disabled>Download All Documents</button>
+    }
+
+    <!-- Loading spinner to be displayed when fetching data -->
+    <div id="loadingSpinner" class="spinner-border text-primary" role="status" style="display: none;">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<!-- Include Bootstrap Bundle JS for Bootstrap components functionality -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+@section Scripts {
+    <script>
+        document.getElementById('accountSelect').addEventListener('change', updateDatabases);
+        document.getElementById('databaseSelect').addEventListener('change', updateCollections);
+
+        function updateDatabases() {
+            var accountSelect = document.getElementById('accountSelect');
+            var databaseSelect = document.getElementById('databaseSelect');
+            var accountName = accountSelect.value;
+
+            // Clear collection dropdown since the account has changed
+            document.getElementById('collectionSelect').innerHTML = '<option value="">Select a collection</option>';
+            document.getElementById('collectionSelect').disabled = true; // Disable collection select
+            document.getElementById('downloadForm').querySelector('button[type="submit"]').disabled = true; // Disable submit button
+
+            if (accountName) {
+                fetch(`/Databases?accountName=${encodeURIComponent(accountName)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        databaseSelect.innerHTML = '<option value="">Select a database</option>'; // Clear and add default option
+                        data.forEach(dbName => {
+                            var option = document.createElement('option');
+                            option.value = dbName;
+                            option.textContent = dbName;
+                            databaseSelect.appendChild(option);
+                        });
+                        databaseSelect.disabled = false; // Enable database select
+                    })
+                    .catch(error => {
+                        console.error('Error fetching databases:', error);
+                        databaseSelect.innerHTML = '<option value="">Error loading databases</option>';
+                        databaseSelect.disabled = true; // Disable database select
+                    });
+            } else {
+                databaseSelect.innerHTML = '<option value="">Select a database</option>'; // Clear the dropdown if no account is selected
+                databaseSelect.disabled = true; // Keep database select disabled
+            }
+        }
+
+        function updateCollections() {
+            var accountName = document.getElementById('accountSelect').value;
+            var databaseName = document.getElementById('databaseSelect').value;
+            var collectionSelect = document.getElementById('collectionSelect');
+
+            if (accountName && databaseName) {
+                fetch(`/Collections?accountName=${encodeURIComponent(accountName)}&databaseName=${encodeURIComponent(databaseName)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        collectionSelect.innerHTML = '<option value="">Select a collection</option>'; // Clear and add default option
+                        data.forEach(collectionName => {
+                            var option = document.createElement('option');
+                            option.value = collectionName;
+                            option.textContent = collectionName;
+                            collectionSelect.appendChild(option);
+                        });
+                        collectionSelect.disabled = false; // Enable collection select
+                        document.getElementById('downloadForm').querySelector('button[type="submit"]').disabled = false; // Enable submit button
+                    })
+                    .catch(error => {
+                        console.error('Error fetching collections:', error);
+                        collectionSelect.innerHTML = '<option value="">Error loading collections</option>';
+                        collectionSelect.disabled = true; // Disable collection select
+                        document.getElementById('downloadForm').querySelector('button[type="submit"]').disabled = true; // Disable submit button
+                    });
+            } else {
+                collectionSelect.innerHTML = '<option value="">Select a collection</option>'; // Clear the dropdown if no database is selected
+                collectionSelect.disabled = true; // Keep collection select disabled
+                document.getElementById('downloadForm').querySelector('button[type="submit"]').disabled = true; // Keep submit button disabled
+            }
+        }
+    </script>
+}
+
+<!-- Include jQuery (required by Bootstrap JS) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+<!-- Form validation script -->
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>

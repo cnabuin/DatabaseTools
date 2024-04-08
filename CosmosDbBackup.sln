@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CosmosDbBackup.MvcApi", "CosmosDbBackup.MvcApi\CosmosDbBackup.MvcApi.csproj", "{762CF683-9EA6-43F6-8D61-7D0A343559FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CosmosDbBackup.Application", "CosmosDbBackup.Application\CosmosDbBackup.Application.csproj", "{09F35754-50F6-4873-8808-57DEA7E4BC99}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CosmosDbBackup.Infrastructure", "CosmosDbBackup.Infrastructure\CosmosDbBackup.Infrastructure.csproj", "{C6B5065B-CAB8-42D8-AFD3-AB56A6695BE3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CosmosDbBackup.DependencyInjection", "CosmosDbBackup.DependencyInjection\CosmosDbBackup.DependencyInjection.csproj", "{728EA092-E0C3-4432-9623-63D2ACBBD819}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{762CF683-9EA6-43F6-8D61-7D0A343559FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{762CF683-9EA6-43F6-8D61-7D0A343559FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{762CF683-9EA6-43F6-8D61-7D0A343559FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{762CF683-9EA6-43F6-8D61-7D0A343559FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09F35754-50F6-4873-8808-57DEA7E4BC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09F35754-50F6-4873-8808-57DEA7E4BC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09F35754-50F6-4873-8808-57DEA7E4BC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09F35754-50F6-4873-8808-57DEA7E4BC99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6B5065B-CAB8-42D8-AFD3-AB56A6695BE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6B5065B-CAB8-42D8-AFD3-AB56A6695BE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6B5065B-CAB8-42D8-AFD3-AB56A6695BE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6B5065B-CAB8-42D8-AFD3-AB56A6695BE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{728EA092-E0C3-4432-9623-63D2ACBBD819}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{728EA092-E0C3-4432-9623-63D2ACBBD819}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{728EA092-E0C3-4432-9623-63D2ACBBD819}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{728EA092-E0C3-4432-9623-63D2ACBBD819}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D177E034-1F9B-4805-B741-86FBDE4919BF}
+	EndGlobalSection
+EndGlobal
